@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,5 +14,7 @@ namespace graphs
         public int y = 0;
         public int number = 0;
         public List<int> svyaz = new List<int>();
+        public Point to = new Point(0,0);
+        public List<Point> from = new List<Point>();
     }
 }

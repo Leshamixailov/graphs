@@ -94,6 +94,7 @@ namespace graphs
                      g.DrawEllipse(Red, countX * 40+1, countY * 40+1, 39, 39);
                     
                 }
+                
                 for (int i = 0; i < 30; i++)
                 {
                     for (int j = 0; j < 15; j++)
@@ -101,12 +102,33 @@ namespace graphs
                         if (Items[i, j].Id == "Вершина")
                         {
                             g.DrawEllipse(Blue, i * 40 + 1, j * 40 + 1, 39, 39);
+                            g.DrawString(Items[i, j].number.ToString(),this.Font,Brushes.Black, i * 40 + 10, j * 40 + 10);
                         }
                         if (Items[i, j].Id == "#" && toolStripButton3.Checked)
                         {
                             g.FillRectangle(yellow, i * 40 + 1, j * 40 + 1,39,39);
                         }
+                        
+                    }
+                }
+                Pen Blue1 = new Pen(Color.Blue,3);
 
+
+                //Blue1.EndCap = System.Drawing.Drawing2D.LineCap.ArrowAnchor;
+                for (int i = 0; i < 30; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                       
+                        if (Items[i, j].svyaz.Count > 0)
+                        {
+                            foreach (var s in Items[i, j].from)
+                            {
+                                g.DrawLine(Blue, Items[i, j].to, s);
+                                g.DrawEllipse(Red, s.X-2, s.Y-2, 5, 5);
+                            }
+
+                        }
                     }
                 }
             }
@@ -120,6 +142,8 @@ namespace graphs
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            if (toolStripButton2.Checked)
+                toolStripButton2.Checked = false;
             bool toolStripButton1Info = toolStripButton1.Checked;
             toolStripButton1.Checked = !toolStripButton1Info;
         }
@@ -173,6 +197,8 @@ namespace graphs
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
+            if(toolStripButton1.Checked)
+            toolStripButton1.Checked = false;
             bool toolStripButton2Info = toolStripButton2.Checked;
             toolStripButton2.Checked = !toolStripButton2Info;
         }

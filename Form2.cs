@@ -30,10 +30,7 @@ namespace graphs
             {
                 comboBox1.Items.Add(i.ToString());
             }
-           
-                
-            
-           
+                             
            
         }
 
@@ -42,7 +39,20 @@ namespace graphs
             var Parent = (Form1)this.Owner;
 
             Parent.Items[x1, y1].svyaz.Add(Convert.ToInt32(comboBox1.SelectedItem.ToString()));
+           
+            
+            for (int i = 0; i < 30; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (Parent.Items[i,j].number== Convert.ToInt32(comboBox1.SelectedItem.ToString()))
+                    Parent.Items[x1, y1].from.Add(new Point(Parent.Items[i, j].x*40+20, Parent.Items[i, j].y * 40 + 20));
+                }
+            }
+            Parent.Items[x1, y1].to = new Point(x1*40 + 20, y1*40 + 20);
+            //MessageBox.Show(Parent.Items[x1, y1].to.X.ToString()+" "+ Parent.Items[x1, y1].from.X.ToString());
             //Parent.Close();
+            this.Close();
         }
     }
 }
