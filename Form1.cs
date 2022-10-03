@@ -16,7 +16,9 @@ namespace graphs
         {
             InitializeComponent();
         }
-       // bool toolStripButton3Info = true;
+        int count = 0;
+        // bool toolStripButton3Info = true;
+        Item[,] Items = new Item[30, 15];
         private void Form1_Load(object sender, EventArgs e)
         {
             Pen Green = new Pen(Color.Green, 1);
@@ -25,11 +27,13 @@ namespace graphs
             int countVertical = pictureBox1.Height / 40;
             using (Graphics g = Graphics.FromImage(pictureBox1.Image))
             {
-                for (int i = 0; i < countHorizontal; i++)
+                for (int i = 0; i < 30; i++)
                 {
-                    for (int j = 0; j < countVertical; j++)
+                    for (int j = 0; j < 15; j++)
                     {
-                        g.DrawRectangle(Green, i * 40, j * 40, 40, 40);
+                        Items[i, j]= new Item();
+                        Items[i, j].x = i;
+                        Items[i, j].y = j;
                     }
                 }
             }
@@ -42,22 +46,33 @@ namespace graphs
             //    g.DrawEllipse(Blue,2,2,46,46);
             //}
         }
+        
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+
             Cursor.Current = Cursors.Hand;
             //this.Cursor = Cursors.UpArrow;
             Pen Green = new Pen(Color.Green, 1);
             Pen Blue = new Pen(Color.Blue, 2);
+            Pen Red = new Pen(Color.Red, 2);
+            SolidBrush yellow = new SolidBrush(Color.Yellow);
             int x = e.X;
             int y = e.Y;
             
             int countX = x / 40;
             int countY = y / 40;
-            label1.Text = countX.ToString();
-            label2.Text = countY.ToString();
+            if (Items[countX, countY].number != 0)
+            label2.Text = Items[countX, countY].number.ToString();
+            else
+            label2.Text ="";
+            //label2.Text = countY.ToString();
             int countHorizontal = pictureBox1.Width / 40;
             int countVertical = pictureBox1.Height / 40;
+            label3.Text = Items[countX, countY].Id;
+
+            label6.Text = Items[countX, countY].x.ToString();
+            label7.Text = Items[countX, countY].y.ToString();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
            
             using (Graphics g = Graphics.FromImage(pictureBox1.Image))
@@ -71,7 +86,25 @@ namespace graphs
                     }
                 }
                 if (toolStripButton1.Checked == true)
-                g.DrawEllipse(Blue, countX * 40+1, countY * 40+1, 39, 39);
+                {
+                     g.DrawEllipse(Red, countX * 40+1, countY * 40+1, 39, 39);
+                    
+                }
+                for (int i = 0; i < 30; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        if (Items[i, j].Id == "Вершина")
+                        {
+                            g.DrawEllipse(Blue, i * 40 + 1, j * 40 + 1, 39, 39);
+                        }
+                        if (Items[i, j].Id == "#" && toolStripButton3.Checked)
+                        {
+                            g.FillRectangle(yellow, i * 40 + 1, j * 40 + 1,39,39);
+                        }
+
+                    }
+                }
             }
         }
 
@@ -85,6 +118,56 @@ namespace graphs
         {
             bool toolStripButton1Info = toolStripButton1.Checked;
             toolStripButton1.Checked = !toolStripButton1Info;
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            int x = e.X;
+            int y = e.Y;
+
+            int countX = x / 40;
+            int countY = y / 40;
+            if (toolStripButton1.Checked)
+            {   
+               
+                if(Items[countX, countY].Id!="#")
+                {
+                count++;
+                Items[countX, countY].Id = "Вершина";
+                Items[countX, countY].number = count;
+                if(countX <29)
+                Items[countX+1, countY].Id = "#";
+                if (countX > 0)
+                Items[countX-1, countY].Id = "#";
+                if (countY < 14)
+                Items[countX, countY+1].Id = "#";
+                if (countY > 0)
+                Items[countX, countY-1].Id = "#";
+
+                if (countX < 29 && countY < 14)
+                    Items[countX + 1, countY+1].Id = "#";
+                if (countX > 0 && countY > 0)
+                    Items[countX - 1, countY-1].Id = "#";
+                if (countY < 14 && countX > 0)
+                    Items[countX-1, countY + 1].Id = "#";
+                if (countX < 29 && countY > 0)
+                    Items[countX+1, countY - 1].Id = "#";
+                }
+            }
+            if (toolStripButton1.Checked)
+            {
+
+                if (Items[countX, countY].Id == "Вершина")
+                {
+                    ////
+                }
+            }
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            bool toolStripButton2Info = toolStripButton2.Checked;
+            toolStripButton2.Checked = !toolStripButton2Info;
         }
     }
 }
