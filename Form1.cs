@@ -16,7 +16,7 @@ namespace graphs
         {
             InitializeComponent();
         }
-        
+       // bool toolStripButton3Info = true;
         private void Form1_Load(object sender, EventArgs e)
         {
             Pen Green = new Pen(Color.Green, 1);
@@ -48,6 +48,7 @@ namespace graphs
             Cursor.Current = Cursors.Hand;
             //this.Cursor = Cursors.UpArrow;
             Pen Green = new Pen(Color.Green, 1);
+            Pen Blue = new Pen(Color.Blue, 2);
             int x = e.X;
             int y = e.Y;
             
@@ -58,8 +59,10 @@ namespace graphs
             int countHorizontal = pictureBox1.Width / 40;
             int countVertical = pictureBox1.Height / 40;
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+           
             using (Graphics g = Graphics.FromImage(pictureBox1.Image))
             {
+                if (toolStripButton3.Checked == true)
                 for (int i = 0; i < countHorizontal; i++)
                 {
                     for (int j = 0; j < countVertical; j++)
@@ -67,8 +70,21 @@ namespace graphs
                         g.DrawRectangle(Green, i * 40, j * 40, 40, 40);
                     }
                 }
-                g.DrawEllipse(Green, countX * 40, countY * 40, 40, 40);
+                if (toolStripButton1.Checked == true)
+                g.DrawEllipse(Blue, countX * 40+1, countY * 40+1, 39, 39);
             }
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            bool toolStripButton3Info = toolStripButton3.Checked;
+            toolStripButton3.Checked = !toolStripButton3Info;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            bool toolStripButton1Info = toolStripButton1.Checked;
+            toolStripButton1.Checked = !toolStripButton1Info;
         }
     }
 }
