@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace graphs
 {
-    internal class Item
+    public class Item
     {
         public string Id = "Пусто";//{ get; set; }
         public int x = 0;
         public int y = 0;
         public int number = 0;
+        public List<int> svyaz = new List<int>();
     }
 }

@@ -17,8 +17,10 @@ namespace graphs
             InitializeComponent();
         }
         int count = 0;
+        public List<int> list = new List<int>();
         // bool toolStripButton3Info = true;
-        Item[,] Items = new Item[30, 15];
+
+        public Item[,] Items = new Item[30, 15];
         private void Form1_Load(object sender, EventArgs e)
         {
             Pen Green = new Pen(Color.Green, 1);
@@ -31,6 +33,7 @@ namespace graphs
                 {
                     for (int j = 0; j < 15; j++)
                     {
+                        // Item Item = new Item();
                         Items[i, j]= new Item();
                         Items[i, j].x = i;
                         Items[i, j].y = j;
@@ -73,6 +76,7 @@ namespace graphs
 
             label6.Text = Items[countX, countY].x.ToString();
             label7.Text = Items[countX, countY].y.ToString();
+            label8.Text=Items[countX, countY].svyaz.Count.ToString();
             pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height);
            
             using (Graphics g = Graphics.FromImage(pictureBox1.Image))
@@ -128,13 +132,14 @@ namespace graphs
             int countX = x / 40;
             int countY = y / 40;
             if (toolStripButton1.Checked)
-            {   
-               
-                if(Items[countX, countY].Id!="#")
+            {
+
+                if (Items[countX, countY].Id == "Пусто")
                 {
                 count++;
                 Items[countX, countY].Id = "Вершина";
                 Items[countX, countY].number = count;
+                list.Add(count);
                 if(countX <29)
                 Items[countX+1, countY].Id = "#";
                 if (countX > 0)
@@ -154,12 +159,14 @@ namespace graphs
                     Items[countX+1, countY - 1].Id = "#";
                 }
             }
-            if (toolStripButton1.Checked)
+            if (toolStripButton2.Checked)
             {
 
                 if (Items[countX, countY].Id == "Вершина")
                 {
-                    ////
+                    
+                    Form2 form2 = new Form2(list, countX, countY);
+                    form2.ShowDialog(this);
                 }
             }
         }
