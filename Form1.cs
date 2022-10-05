@@ -248,5 +248,112 @@ namespace graphs
             }
 
         }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            
+            List<Item> Elements = new List<Item>();
+            List<int> marked = new List<int>();
+            List<int> NextCheck = new List<int>();
+            List<int> NextCheck1 = new List<int>();
+            //marked.AddRange(list);
+            for (int i = 0; i < 30; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (Items[i, j].number != 0)
+                    {
+                        Elements.Add(Items[i, j]);
+                    }
+                   
+                }
+            }
+            foreach (var a in Elements)
+            {
+                if (a.startPosition == true)
+                {
+                   
+                    a.bestСondition = 0;
+                    int i = 0;
+                    foreach (var b in a.svyaz)
+                    {
+                        foreach (var c in Elements)
+                        {
+                            if (c.number == b)
+                            {
+                                if (a.bestСondition + a.ves[i] < c.bestСondition)
+                                {
+                                    c.bestСondition = a.bestСondition + a.ves[i];
+                                    c.way = a.number;
+                                }
+                            }
+                        }
+                        i++;
+                        NextCheck.Add(b);
+                    }
+                    marked.Add(a.number);
+                }
+            }
+
+            while(NextCheck1.Count!=0)
+            {
+                
+                foreach (var d in NextCheck)
+                {
+                    foreach (var a in Elements)
+                    {
+                        if (a.number == d)
+                        {
+                            int i = 0;
+                            foreach (var b in a.svyaz)
+                            {
+                                foreach (var c in Elements)
+                                {
+                                    if (c.number == b)
+                                    {
+                                        if (a.bestСondition + a.ves[i] < c.bestСondition)
+                                        {
+                                            c.bestСondition = a.bestСondition + a.ves[i];
+                                            c.way = a.number;
+                                        }
+                                    }
+                                }
+                                i++;
+                                foreach (var r in marked)
+                                    if (a.number != r)
+                                        NextCheck1.Add(b);
+                            }
+
+                            marked.Add(a.number);
+
+                            //NextCheck.Remove(a.number);
+                        }
+
+                    }
+
+                }
+                
+                NextCheck.Clear();
+                NextCheck.AddRange(NextCheck1);
+            }
+            int stop= 5;
+            string way = stop.ToString() + "-";
+
+            MessageBox.Show(Elements[5].way.ToString());
+            while (stop!=0)
+            {
+                
+                foreach (var a in Elements)
+                {
+                    if (a.number == Elements[stop].way)
+                    {
+                        way += Elements[stop].way.ToString() + "-";
+                      
+                        stop = Elements[Elements[stop].way].way;
+                    }
+                }
+            }
+             MessageBox.Show(way);
+        }
     }
 }

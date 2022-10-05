@@ -16,6 +16,8 @@ namespace graphs
         public int number = 0;
         public List<int>  ves = new List<int>();
         public List<int> svyaz = new List<int>();
+        public int way = 0;
+        public int bestСondition = 999999999; 
         public Point to = new Point(0,0);
         public List<Point> from = new List<Point>();
         public List<Point> TextLocation = new List<Point>();
