@@ -18,9 +18,9 @@ namespace graphs
         }
         int count = 0;
         public List<int> list = new List<int>();
-       // public List<Point> a = new List<Point>();
-        // bool toolStripButton3Info = true;
-
+        public int start = 0;
+       
+        Image image;
         public Item[,] Items = new Item[30, 15];
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -34,21 +34,14 @@ namespace graphs
                 {
                     for (int j = 0; j < 15; j++)
                     {
-                        // Item Item = new Item();
+                        
                         Items[i, j]= new Item();
                         Items[i, j].x = i;
                         Items[i, j].y = j;
                     }
                 }
             }
-            
-            //pictureBox2.Image = new Bitmap(pictureBox2.Width, pictureBox2.Height);
-            //Pen Blue = new Pen(Color.Blue,4);
-            //using (Graphics g = Graphics.FromImage(pictureBox2.Image))
-            //{
-            //    g.Clear(Color.White);
-            //    g.DrawEllipse(Blue,2,2,46,46);
-            //}
+            image = new Bitmap("flag-map-marker-1_icon-icons.com_56727.png");
         }
         
 
@@ -59,6 +52,7 @@ namespace graphs
             //this.Cursor = Cursors.UpArrow;
             Pen Green = new Pen(Color.Green, 1);
             Pen Blue = new Pen(Color.Blue, 2);
+            Pen Indigo = new Pen(Color.Indigo, 2);
             Pen Red = new Pen(Color.Red, 2);
             Font font = new Font("Segoe UI",10,FontStyle.Regular);
             Font font1 = new Font("Segoe UI", 12, FontStyle.Regular);
@@ -104,7 +98,14 @@ namespace graphs
                     {
                         if (Items[i, j].Id == "Вершина")
                         {
-                            g.DrawEllipse(Blue, i * 40 + 1, j * 40 + 1, 39, 39);
+                            if (!Items[i, j].startPosition)
+                            { g.DrawEllipse(Blue, i * 40 + 1, j * 40 + 1, 39, 39);}
+                            else
+                            {
+                                g.DrawEllipse(Indigo, i * 40 + 1, j * 40 + 1, 39, 39);
+                                g.DrawImage(image,i * 40 + 7, j * 40 + 5, 30, 30);
+                            }
+                            
                             g.DrawString(Items[i, j].number.ToString(),font1,Brushes.Blue, i * 40 + 10, j * 40 + 10);
                         }
                         if (Items[i, j].Id == "#" && toolStripButton3.Checked)
@@ -218,8 +219,33 @@ namespace graphs
             toolStripButton2.Checked = !toolStripButton2Info;
         }
 
+
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
+            if (list.Count > 0)
+            {
+                toolStripButton4.Enabled = false;
+                Form3 form3 = new Form3(list);
+                form3.ShowDialog(this);
+                MessageBox.Show("Стартовой вершиной выбрана вершина " + start.ToString());
+
+                for (int i = 0; i < 30; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        
+                        if (Items[i, j].number == start)
+                        {
+                            Items[i, j].startPosition = true;
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Добавьте хотябы одну вершину");
+            }
 
         }
     }

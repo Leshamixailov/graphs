@@ -9,7 +9,8 @@ namespace graphs
 {
     public class Item
     {
-        public string Id = "Пусто";//{ get; set; }
+        public string Id = "Пусто";
+        public bool startPosition = false;//{ get; set; }
         public int x = 0;
         public int y = 0;
         public int number = 0;

@@ -41,7 +41,7 @@ namespace graphs
         {
             int k ;
             int.TryParse(textBox1.Text, out k);
-            if (k != 0)
+            if (k != 0 && comboBox1.SelectedIndex>-1)
             {
                 var Parent = (Form1)this.Owner;
 
@@ -69,8 +69,18 @@ namespace graphs
                 Parent.dataGridView1.Rows.Add(Parent.Items[x1, y1].number, Convert.ToInt32(comboBox1.SelectedItem.ToString()), Parent.Items[x1, y1].ves.Last());
             }
             else
-                MessageBox.Show("Неверный параметр вес");
+                MessageBox.Show("Неверный параметр вес или не выбрана вершина");
             this.Close();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
