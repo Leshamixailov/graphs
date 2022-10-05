@@ -25,9 +25,12 @@ namespace graphs
 
         private void Form2_Load(object sender, EventArgs e)
         {
+
             Form1 form1 = new Form1();
+            var Parent = (Form1)this.Owner;
             foreach (int i in list)
             {
+                if (i!=Parent.Items[x1,y1].number)
                 comboBox1.Items.Add(i.ToString());
             }
                              
@@ -36,22 +39,37 @@ namespace graphs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var Parent = (Form1)this.Owner;
-
-            Parent.Items[x1, y1].svyaz.Add(Convert.ToInt32(comboBox1.SelectedItem.ToString()));
-           
-            
-            for (int i = 0; i < 30; i++)
+            int k ;
+            int.TryParse(textBox1.Text, out k);
+            if (k != 0)
             {
-                for (int j = 0; j < 15; j++)
+                var Parent = (Form1)this.Owner;
+
+                Parent.Items[x1, y1].svyaz.Add(Convert.ToInt32(comboBox1.SelectedItem.ToString()));
+
+
+                for (int i = 0; i < 30; i++)
                 {
-                    if (Parent.Items[i,j].number== Convert.ToInt32(comboBox1.SelectedItem.ToString()))
-                    Parent.Items[x1, y1].from.Add(new Point(Parent.Items[i, j].x*40+20, Parent.Items[i, j].y * 40 + 20));
+                    for (int j = 0; j < 15; j++)
+                    {
+                        if (Parent.Items[i, j].number == Convert.ToInt32(comboBox1.SelectedItem.ToString()))
+                            Parent.Items[x1, y1].from.Add(new Point(Parent.Items[i, j].x * 40 + 20, Parent.Items[i, j].y * 40 + 20));
+                    }
                 }
+               
+                Parent.Items[x1, y1].to = new Point(x1 * 40 + 20, y1 * 40 + 20);
+                //x =Xa+R*Xb\(1+R) , где R отношение отрезков в результате деления
+                //y =Ya+R*Yb\(1+R) , где R отношение отрезков в результате деления
+                int Xmedium = (Parent.Items[x1, y1].from.Last().X/3 + Parent.Items[x1, y1].to.X) *3/4;
+                int Ymedium = (Parent.Items[x1, y1].from.Last().Y/3 + Parent.Items[x1, y1].to.Y) *3/4;
+                Parent.Items[x1, y1].TextLocation.Add(new Point(Xmedium, Ymedium))  ; 
+                Parent.Items[x1, y1].ves.Add(int.Parse(textBox1.Text));
+                //MessageBox.Show(Parent.Items[x1, y1].to.X.ToString()+" "+ Parent.Items[x1, y1].from.X.ToString());
+                //Parent.Close();
+                Parent.dataGridView1.Rows.Add(Parent.Items[x1, y1].number, Convert.ToInt32(comboBox1.SelectedItem.ToString()), Parent.Items[x1, y1].ves.Last());
             }
-            Parent.Items[x1, y1].to = new Point(x1*40 + 20, y1*40 + 20);
-            //MessageBox.Show(Parent.Items[x1, y1].to.X.ToString()+" "+ Parent.Items[x1, y1].from.X.ToString());
-            //Parent.Close();
+            else
+                MessageBox.Show("Неверный параметр вес");
             this.Close();
         }
     }

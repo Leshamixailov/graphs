@@ -18,6 +18,7 @@ namespace graphs
         }
         int count = 0;
         public List<int> list = new List<int>();
+       // public List<Point> a = new List<Point>();
         // bool toolStripButton3Info = true;
 
         public Item[,] Items = new Item[30, 15];
@@ -59,6 +60,8 @@ namespace graphs
             Pen Green = new Pen(Color.Green, 1);
             Pen Blue = new Pen(Color.Blue, 2);
             Pen Red = new Pen(Color.Red, 2);
+            Font font = new Font("Segoe UI",10,FontStyle.Regular);
+            Font font1 = new Font("Segoe UI", 12, FontStyle.Regular);
             SolidBrush yellow = new SolidBrush(Color.Yellow);
             int x = e.X;
             int y = e.Y;
@@ -102,7 +105,7 @@ namespace graphs
                         if (Items[i, j].Id == "Вершина")
                         {
                             g.DrawEllipse(Blue, i * 40 + 1, j * 40 + 1, 39, 39);
-                            g.DrawString(Items[i, j].number.ToString(),this.Font,Brushes.Black, i * 40 + 10, j * 40 + 10);
+                            g.DrawString(Items[i, j].number.ToString(),font1,Brushes.Blue, i * 40 + 10, j * 40 + 10);
                         }
                         if (Items[i, j].Id == "#" && toolStripButton3.Checked)
                         {
@@ -124,10 +127,22 @@ namespace graphs
                         {
                             foreach (var s in Items[i, j].from)
                             {
+                                
                                 g.DrawLine(Blue, Items[i, j].to, s);
                                 g.DrawEllipse(Red, s.X-2, s.Y-2, 5, 5);
+
                             }
 
+                        }
+                        if (Items[i, j].TextLocation.Count > 0)
+                        {
+                            int count = 0;
+                            foreach (var s in Items[i, j].TextLocation)
+                            {
+                                g.DrawString("("+Items[i, j].number.ToString()+"-"+ Items[i, j].svyaz[count]+")" + Items[i, j].ves[count].ToString(), font, Brushes.Black, s.X,s.Y);
+                                count++;
+                            }
+                               
                         }
                     }
                 }
@@ -201,6 +216,11 @@ namespace graphs
             toolStripButton1.Checked = false;
             bool toolStripButton2Info = toolStripButton2.Checked;
             toolStripButton2.Checked = !toolStripButton2Info;
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
