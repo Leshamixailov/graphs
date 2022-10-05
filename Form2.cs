@@ -64,6 +64,7 @@ namespace graphs
                 int Ymedium = (Parent.Items[x1, y1].from.Last().Y/3 + Parent.Items[x1, y1].to.Y) *3/4;
                 Parent.Items[x1, y1].TextLocation.Add(new Point(Xmedium, Ymedium))  ; 
                 Parent.Items[x1, y1].ves.Add(int.Parse(textBox1.Text));
+                //Parent.Items[x1, y1].bestСondition.Add(99999999);
                 //MessageBox.Show(Parent.Items[x1, y1].to.X.ToString()+" "+ Parent.Items[x1, y1].from.X.ToString());
                 //Parent.Close();
                 Parent.dataGridView1.Rows.Add(Parent.Items[x1, y1].number, Convert.ToInt32(comboBox1.SelectedItem.ToString()), Parent.Items[x1, y1].ves.Last());
